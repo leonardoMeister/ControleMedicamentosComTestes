@@ -11,7 +11,22 @@ namespace ControleMedicamentos.Dominio.Tests.ModuloFuncionario
     public class UnitFuncionarioTeste
     {
         [TestMethod]
-        public void Test()
+        public void DeveImpedirCriarFuncionario()
+        {
+
+        }
+        [TestMethod]
+        public void DevePermitirCriarFuncionario()
+        {
+
+        }
+        [TestMethod]
+        public void DeveEditarDadosFuncionario()
+        {
+
+        }
+        [TestMethod]
+        public void DeveVerificarCampoACampoFuncionario()
         {
 
         }

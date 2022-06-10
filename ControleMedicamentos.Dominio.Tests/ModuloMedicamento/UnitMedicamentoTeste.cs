@@ -11,7 +11,22 @@ namespace ControleMedicamentos.Dominio.Tests.ModuloMedicamento
     public class UnitMedicamentoTeste
     {
         [TestMethod]
-        public void Test()
+        public void DeveImpedirCriarMedicamento()
+        {
+
+        }
+        [TestMethod]
+        public void DevePermitirCriarMedicamento()
+        {
+
+        }
+        [TestMethod]
+        public void DeveEditarDadosMedicamento()
+        {
+
+        }
+        [TestMethod]
+        public void DeveVerificarCampoACampoMedicamento()
         {
 
         }

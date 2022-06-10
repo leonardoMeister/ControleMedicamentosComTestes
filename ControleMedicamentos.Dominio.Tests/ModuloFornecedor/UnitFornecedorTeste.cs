@@ -11,7 +11,22 @@ namespace ControleMedicamentos.Dominio.Tests.ModuloFornecedor
     public class UnitFornecedorTeste
     {
         [TestMethod]
-        public void Test()
+        public void DeveImpedirCriarFornecedor()
+        {
+
+        }
+        [TestMethod]
+        public void DevePermitirCriarFornecedor()
+        {
+
+        }
+        [TestMethod]
+        public void DeveEditarDadosFornecedor()
+        {
+
+        }
+        [TestMethod]
+        public void DeveVerificarCampoACampoFornecedor()
         {
 
         }

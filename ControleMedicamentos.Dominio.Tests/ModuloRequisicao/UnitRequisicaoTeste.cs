@@ -11,7 +11,22 @@ namespace ControleMedicamentos.Dominio.Tests.ModuloRequisicao
     public class UnitRequisicaoTeste
     {
         [TestMethod]
-        public void Test()
+        public void DeveImpedirCriarRequisicao()
+        {
+
+        }
+        [TestMethod]
+        public void DevePermitirCriarRequisicao()
+        {
+
+        }
+        [TestMethod]
+        public void DeveEditarDadosRequisicao()
+        {
+
+        }
+        [TestMethod]
+        public void DeveVerificarCampoACampoRequisicao()
         {
 
         }

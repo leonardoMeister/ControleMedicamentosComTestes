@@ -18,7 +18,7 @@ namespace ControleMedicamentos.Infra.BancoDados.ModuloFornecedor
 
         protected override string SqlInsert => throw new NotImplementedException();
 
-        protected override string SqlSelectAll => throw new NotImplementedException();
+        protected override string SqlSelectAll => "select * from [TBFornecedor]";
 
         protected override string SqlSelectId => throw new NotImplementedException();
 

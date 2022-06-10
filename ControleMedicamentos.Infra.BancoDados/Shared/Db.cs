@@ -14,11 +14,11 @@ namespace ControleMedicamentos.Infra.BancoDados.Shared
         private static readonly SqlConnection conection;
 
         static Db()
-        {
-            connectionString = @"Data Source=(LocalDB)\MSSqlLocalDB;
-                                Initial Catalog=TestesDonaMarianaDB;
-                                Integrated Security=True;
-                                Pooling=False";
+        {       
+            connectionString = @"Data Source=(LOCALDB)\MSSQLLOCALDB;
+                                  Initial Catalog=ControleMedicamento;
+                                  Integrated Security = True;
+                                  Pooling = false;";
 
             nomeProvider = "System.Data.SqlClient";
 
@@ -146,6 +146,24 @@ namespace ControleMedicamentos.Infra.BancoDados.Shared
                     command.CommandText = sql;
                     command.Connection = connection;
                     command.SetParameters(parameters);
+
+                    connection.Open();
+                    command.ExecuteNonQuery();
+
+                }
+            }
+        }
+
+        public static void ExecutarComando(string sql)
+        {
+            using (IDbConnection connection = conection)
+            {
+                connection.ConnectionString = connectionString;
+
+                using (IDbCommand command = conection.CreateCommand())
+                {
+                    command.CommandText = sql;
+                    command.Connection = connection;
 
                     connection.Open();
                     command.ExecuteNonQuery();

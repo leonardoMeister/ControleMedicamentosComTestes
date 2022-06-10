@@ -8,10 +8,25 @@ using System.Threading.Tasks;
 namespace ControleMedicamentos.Dominio.Tests.ModuloPaciente
 {
     [TestClass]
-    internal class UnitPacienteTeste
+    public class UnitPacienteTeste
     {
         [TestMethod]
-        public void Test()
+        public void DeveImpedirCriarPaciente()
+        {
+
+        }
+        [TestMethod]
+        public void DevePermitirCriarPaciente()
+        {
+
+        }
+        [TestMethod]
+        public void DeveEditarDadosPaciente()
+        {
+
+        }
+        [TestMethod]
+        public void DeveVerificarCampoACampoPaciente()
         {
 
         }
