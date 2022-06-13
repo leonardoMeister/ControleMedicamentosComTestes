@@ -38,19 +38,6 @@ namespace ControleMedicamentos.Infra.BancoDados.Tests.ModuloRequisicao
 
         }
 
-        [TestMethod] 
-        public void DeveVerificarExistenciaRequisicao()
-        {
-
-        }
-
-
-        [TestMethod]
-        public void DeveSelecionarIDRequisicao()
-        {
-
-        }
-
         [TestMethod]
         public void DeveSelecionarVariosRequisicao()
         {

@@ -38,5 +38,10 @@ namespace ControleMedicamentos.Infra.BancoDados.ModuloFuncionario
         {
             throw new NotImplementedException();
         }
+
+        public void ExcluirComReferencias(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

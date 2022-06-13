@@ -28,7 +28,7 @@ namespace ControleMedicamentos.Infra.BancoDados.ModuloMedicamento
         {
             throw new NotImplementedException();
         }
-
+        
         public override AbstractValidator<Medicamento> ObterValidador(Medicamento item, List<Medicamento> lista)
         {
             throw new NotImplementedException();
