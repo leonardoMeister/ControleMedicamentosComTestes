@@ -24,6 +24,16 @@ namespace ControleMedicamentos.Infra.BancoDados.ModuloRequisicao
 
         protected override string SqlExiste => throw new NotImplementedException();
 
+        public override List<Requisicao> SelecionarTodos()
+        {
+            return base.SelecionarTodos();
+        }
+
+        public override Requisicao SelecionarPorId(int id)
+        {
+            return base.SelecionarPorId(id);
+        }
+
         public override Requisicao ConverterEmRegistro(IDataReader dataReader)
         {
             throw new NotImplementedException();
