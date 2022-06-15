@@ -20,17 +20,15 @@ namespace ControleMedicamentos.Infra.BancoDados.ModuloRequisicao
     {
         protected override string SqlUpdate =>
                 @"UPDATE TBRequisicao
-                   SET [Funcionario_Id] = ''
-                      ,[Paciente_Id] = ''
-                      ,[Medicamento_Id] = ''
-                      ,[QuantidadeMedicamento] = ''
-                      ,[Data] = ''
+                   SET [Funcionario_Id] = @FKFUNCIONARIO
+                      ,[Paciente_Id] = @FKPACIENTE
+                      ,[Medicamento_Id] = @FKMEDICAMENTO
+                      ,[QuantidadeMedicamento] = @QUANTIDADE
+                      ,[Data] = @DATA
                  WHERE Id = @ID";
-
         protected override string SqlDelete =>
                 @"DELETE FROM TBRequisicao
                     WHERE Id = @ID";
-
         protected override string SqlInsert =>
                 @"INSERT INTO TBRequisicao
                    (Funcionario_Id
@@ -48,7 +46,6 @@ namespace ControleMedicamentos.Infra.BancoDados.ModuloRequisicao
                       ,[QuantidadeMedicamento]
                       ,[Data]
                   FROM TBRequisicao";
-
         protected override string SqlSelectId =>
                 @"SELECT [Id]
                       ,[Funcionario_Id]
@@ -58,7 +55,6 @@ namespace ControleMedicamentos.Infra.BancoDados.ModuloRequisicao
                       ,[Data]
                   FROM TBRequisicao
                   WHERE Id = @ID";
-
         protected override string SqlExiste =>
                 @"SELECT
                         COUNT(*)

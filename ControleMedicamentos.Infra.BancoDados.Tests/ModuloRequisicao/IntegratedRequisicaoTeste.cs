@@ -11,10 +11,6 @@ using ControleMedicamentos.Infra.BancoDados.ModuloRequisicao;
 using ControleMedicamentos.Infra.BancoDados.Shared;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ControleMedicamentos.Infra.BancoDados.Tests.ModuloRequisicao
 {
@@ -84,19 +80,105 @@ namespace ControleMedicamentos.Infra.BancoDados.Tests.ModuloRequisicao
         [TestMethod]
         public void DeveEditarRequisicao()
         {
-            
+            var controlador = new ControladorRequisicao();
+
+            Fornecedor forn = new Fornecedor("leonardo", "48 88888-8989", "leonazinh@gmail.com", "MonteCastelo", "SC");
+            new ControladorFornecedor().InserirNovo(forn);
+            Funcionario funcionario = new Funcionario("Leonardo", "LeonardoMargoti", "SenhaParaLeo");
+            new ControladorFuncionario().InserirNovo(funcionario);
+            Medicamento medicamento = new Medicamento("Dipirona", "Anti inflamatorio", "Lote 991", DateTime.Now, forn);
+            medicamento.AdicionarQuantidadeMedicamentos(100);
+            new ControladorMedicamento().InserirNovo(medicamento);
+            Paciente pacinte = new Paciente("Leonanrdo", "322 0000 0000 0000");
+            new ControladorPaciente().InserirNovo(pacinte);
+            Requisicao requisicao = new Requisicao(medicamento, pacinte, 10, DateTime.Now, funcionario);
+            controlador.InserirNovo(requisicao);
+
+            Fornecedor forn2 = new Fornecedor("leonardo", "48 88888-8989", "leonazinh@gmail.com", "MonteCastelo", "SC");
+            new ControladorFornecedor().InserirNovo(forn2);
+            Funcionario funcionario2 = new Funcionario("Leonardo", "LeonardoMargoti", "SenhaParaLeo");
+            new ControladorFuncionario().InserirNovo(funcionario2);
+            Medicamento medicamento2 = new Medicamento("Dipirona", "Anti inflamatorio", "Lote 991", DateTime.Now, forn2);
+            medicamento2.AdicionarQuantidadeMedicamentos(100);
+            new ControladorMedicamento().InserirNovo(medicamento2);
+            Paciente pacinte2 = new Paciente("Leonanrdo", "322 0000 0000 0000");
+            new ControladorPaciente().InserirNovo(pacinte2);
+
+            Requisicao requisicao2 = new Requisicao(medicamento2, pacinte2, 20, DateTime.Now, funcionario2);
+            controlador.Editar(requisicao._id,requisicao2);
+
+
+            var requisicaoSelecionada = controlador.SelecionarPorId(requisicao._id);
+
+
+            Assert.AreEqual(requisicaoSelecionada.QtdMedicamento, requisicao2.QtdMedicamento);
+            Assert.AreEqual(requisicaoSelecionada.Data.Date, requisicao2.Data.Date);
+            Assert.AreEqual(requisicaoSelecionada.Medicamento._id, requisicao2.Medicamento._id);
+            Assert.AreEqual(requisicaoSelecionada.Paciente._id, requisicao2.Paciente._id);
+            Assert.AreEqual(requisicaoSelecionada.Funcionario._id, requisicao2.Funcionario._id);
         }
 
         [TestMethod]
         public void DeveDeletarRequisicao()
         {
+            var controlador = new ControladorRequisicao();
+
+            Fornecedor forn = new Fornecedor("leonardo", "48 88888-8989", "leonazinh@gmail.com", "MonteCastelo", "SC");
+            new ControladorFornecedor().InserirNovo(forn);
+
+            Funcionario funcionario = new Funcionario("Leonardo", "LeonardoMargoti", "SenhaParaLeo");
+            new ControladorFuncionario().InserirNovo(funcionario);
+
+            Medicamento medicamento = new Medicamento("Dipirona", "Anti inflamatorio", "Lote 991", DateTime.Now, forn);
+            medicamento.AdicionarQuantidadeMedicamentos(100);
+            new ControladorMedicamento().InserirNovo(medicamento);
+
+            Paciente pacinte = new Paciente("Leonanrdo", "322 0000 0000 0000");
+            new ControladorPaciente().InserirNovo(pacinte);
+
+            Requisicao requisicao = new Requisicao(medicamento, pacinte, 10, DateTime.Now, funcionario);
+            controlador.InserirNovo(requisicao);
+
+            controlador.Excluir(requisicao._id);
+
+            var existeRequisicao = controlador.Existe(requisicao._id);
+
+            Assert.AreEqual(false, existeRequisicao);
 
         }
 
         [TestMethod]
         public void DeveSelecionarVariosRequisicao()
         {
+            var controlador = new ControladorRequisicao();
 
+            Fornecedor forn = new Fornecedor("leonardo", "48 88888-8989", "leonazinh@gmail.com", "MonteCastelo", "SC");
+            new ControladorFornecedor().InserirNovo(forn);
+            Funcionario funcionario = new Funcionario("Leonardo", "LeonardoMargoti", "SenhaParaLeo");
+            new ControladorFuncionario().InserirNovo(funcionario);
+            Medicamento medicamento = new Medicamento("Dipirona", "Anti inflamatorio", "Lote 991", DateTime.Now, forn);
+            medicamento.AdicionarQuantidadeMedicamentos(100);
+            new ControladorMedicamento().InserirNovo(medicamento);
+            Paciente pacinte = new Paciente("Leonanrdo", "322 0000 0000 0000");
+            new ControladorPaciente().InserirNovo(pacinte);
+            Requisicao requisicao = new Requisicao(medicamento, pacinte, 10, DateTime.Now, funcionario);
+            controlador.InserirNovo(requisicao);
+
+            Fornecedor forn2 = new Fornecedor("leonardo", "48 88888-8989", "leonazinh@gmail.com", "MonteCastelo", "SC");
+            new ControladorFornecedor().InserirNovo(forn2);
+            Funcionario funcionario2 = new Funcionario("Leonardo", "LeonardoMargoti", "SenhaParaLeo");
+            new ControladorFuncionario().InserirNovo(funcionario2);
+            Medicamento medicamento2 = new Medicamento("Dipirona", "Anti inflamatorio", "Lote 991", DateTime.Now, forn2);
+            medicamento2.AdicionarQuantidadeMedicamentos(100);
+            new ControladorMedicamento().InserirNovo(medicamento2);
+            Paciente pacinte2 = new Paciente("Leonanrdo", "322 0000 0000 0000");
+            new ControladorPaciente().InserirNovo(pacinte2);
+            Requisicao requisicao2 = new Requisicao(medicamento2, pacinte2, 20, DateTime.Now, funcionario2);
+            controlador.InserirNovo(requisicao2);
+
+            var lista = controlador.SelecionarTodos();
+
+            Assert.AreEqual(2, lista.Count);
         }
     }
 }
