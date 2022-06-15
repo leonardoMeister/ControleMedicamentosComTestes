@@ -21,13 +21,15 @@ namespace ControleMedicamentos.Dominio.ModuloRequisicao
         public DateTime Data { get => data; set => data = value; }
         public Funcionario Funcionario { get => funcionario; set => funcionario = value; }
 
-        public Requisicao(Medicamento medicamento, Paciente paciente, int qtdMedicamento, DateTime data, Funcionario funcionario)
+        public Requisicao(Medicamento medicamento, Paciente paciente,
+            int qtdMedicamento, DateTime data, Funcionario funcionario)
         {
-            Medicamento = medicamento;
+            Medicamento = medicamento;            
             Paciente = paciente;
             QtdMedicamento = qtdMedicamento;
             Data = data;
             Funcionario = funcionario;
+
         }
 
         public override string ToString()

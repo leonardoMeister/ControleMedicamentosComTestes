@@ -5,10 +5,6 @@ using ControleMedicamentos.Infra.BancoDados.ModuloMedicamento;
 using ControleMedicamentos.Infra.BancoDados.Shared;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ControleMedicamentos.Infra.BancoDados.Tests.ModuloMedicamento
 {
@@ -18,16 +14,29 @@ namespace ControleMedicamentos.Infra.BancoDados.Tests.ModuloMedicamento
         public IntegratedMedicamentoTeste()
         {
             string sql =
-                @"DELETE FROM TBMedicamento;
-                  DBCC CHECKIDENT (TBMedicamento, RESEED, 0)";
-
+              @"DELETE FROM TBRequisicao;
+                  DBCC CHECKIDENT (TBRequisicao, RESEED, 0)";
             Db.ExecutarComando(sql);
 
             string sql2 =
+               @"DELETE FROM TBPaciente;
+                  DBCC CHECKIDENT (TBPaciente, RESEED, 0)";
+            Db.ExecutarComando(sql2);
+
+            string sql3 =
+                @"DELETE FROM TBFuncionario;
+                  DBCC CHECKIDENT (TBFuncionario, RESEED, 0)";
+            Db.ExecutarComando(sql3);
+
+            string sql4 =
+                @"DELETE FROM TBMedicamento;
+                  DBCC CHECKIDENT (TBMedicamento, RESEED, 0)";
+            Db.ExecutarComando(sql4);
+
+            string sql5 =
                 @"DELETE FROM TBFornecedor;
                   DBCC CHECKIDENT (TBFornecedor, RESEED, 0)";
-
-            Db.ExecutarComando(sql2);
+            Db.ExecutarComando(sql5);
 
         }
 
@@ -46,7 +55,7 @@ namespace ControleMedicamentos.Infra.BancoDados.Tests.ModuloMedicamento
             Assert.AreEqual(medicamentoVerificado.Descricao , medicamento.Descricao);
             Assert.AreEqual(medicamentoVerificado.Lote, medicamento.Lote);
             Assert.AreEqual(medicamentoVerificado.Nome, medicamento.Nome);
-            Assert.AreEqual(medicamentoVerificado.Validade, medicamento.Validade);
+            Assert.AreEqual(medicamentoVerificado.Validade.Date, medicamento.Validade.Date);
             Assert.AreEqual(medicamentoVerificado.QuantidadeDisponivel, medicamento.QuantidadeDisponivel);
             Assert.AreEqual(medicamentoVerificado.QuantidadeRequisicoes, medicamento.QuantidadeRequisicoes);
             Assert.AreEqual(medicamentoVerificado._id, medicamento._id);
@@ -81,7 +90,7 @@ namespace ControleMedicamentos.Infra.BancoDados.Tests.ModuloMedicamento
             Assert.AreEqual(medicamentoVerificado.Descricao, medicamentoEditado.Descricao);
             Assert.AreEqual(medicamentoVerificado.Lote, medicamentoEditado.Lote);
             Assert.AreEqual(medicamentoVerificado.Nome, medicamentoEditado.Nome);
-            Assert.AreEqual(medicamentoVerificado.Validade, medicamentoEditado.Validade);
+            Assert.AreEqual(medicamentoVerificado.Validade.Date, medicamentoEditado.Validade.Date);
             Assert.AreEqual(medicamentoVerificado.QuantidadeDisponivel, medicamentoEditado.QuantidadeDisponivel);
             Assert.AreEqual(medicamentoVerificado.QuantidadeRequisicoes, medicamentoEditado.QuantidadeRequisicoes);
             Assert.AreEqual(medicamentoVerificado._id, medicamentoEditado._id);

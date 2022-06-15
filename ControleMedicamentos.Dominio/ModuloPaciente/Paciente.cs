@@ -2,6 +2,11 @@
 {
     public class Paciente : EntidadeBase
     {
+
+        public Paciente(int id)
+        {
+            this._id = id;
+        }
         public Paciente(string nome, string cartaoSUS)
         {
             Nome = nome;

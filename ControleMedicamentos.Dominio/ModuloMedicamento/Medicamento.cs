@@ -19,6 +19,10 @@ namespace ControleMedicamentos.Dominio.ModuloMedicamento
 
         public int QuantidadeRequisicoes { get { return Requisicoes.Count; } }
 
+        public Medicamento(int id)
+        {
+            this._id = id;
+        }
         public Medicamento(string nome, string descricao, string lote, DateTime validade, Fornecedor forn)
         {
             Nome = nome;
@@ -32,19 +36,11 @@ namespace ControleMedicamentos.Dominio.ModuloMedicamento
 
         public bool AdicionarRequisicao(Requisicao req)
         {
-            ValidadorRequisicao validador = new ValidadorRequisicao();
 
-            var resultado = validador.Validate(req);
-
-            if (resultado.IsValid)
-            {
-                QuantidadeDisponivel -= req.QtdMedicamento;
-                Requisicoes.Add(req);
-            }
-            else return false;
+            QuantidadeDisponivel -= req.QtdMedicamento;
+            Requisicoes.Add(req);
 
             return true;
-
         }
         public void AdicionarQuantidadeMedicamentos(int quantidade)
         {

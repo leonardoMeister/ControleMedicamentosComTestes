@@ -2,6 +2,10 @@
 {
     public class Funcionario : EntidadeBase
     {
+        public Funcionario(int id)
+        {
+            this._id = id;
+        }
 
         public Funcionario(string nome, string login, string senha)
         {

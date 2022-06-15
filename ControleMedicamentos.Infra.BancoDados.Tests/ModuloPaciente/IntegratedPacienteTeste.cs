@@ -16,10 +16,29 @@ namespace ControleMedicamentos.Infra.BancoDados.Tests.ModuloPaciente
         public IntegratedPacienteTeste()
         {
             string sql =
+               @"DELETE FROM TBRequisicao;
+                  DBCC CHECKIDENT (TBRequisicao, RESEED, 0)";
+            Db.ExecutarComando(sql);
+
+            string sql2 =
                @"DELETE FROM TBPaciente;
                   DBCC CHECKIDENT (TBPaciente, RESEED, 0)";
+            Db.ExecutarComando(sql2);
 
-            Db.ExecutarComando(sql);
+            string sql3 =
+                @"DELETE FROM TBFuncionario;
+                  DBCC CHECKIDENT (TBFuncionario, RESEED, 0)";
+            Db.ExecutarComando(sql3);
+
+            string sql4 =
+                @"DELETE FROM TBMedicamento;
+                  DBCC CHECKIDENT (TBMedicamento, RESEED, 0)";
+            Db.ExecutarComando(sql4);
+
+            string sql5 =
+                @"DELETE FROM TBFornecedor;
+                  DBCC CHECKIDENT (TBFornecedor, RESEED, 0)";
+            Db.ExecutarComando(sql5);
 
         }
 
@@ -72,7 +91,7 @@ namespace ControleMedicamentos.Infra.BancoDados.Tests.ModuloPaciente
 
             controlador.InserirNovo(paciente);
 
-            controlador.ExcluirComReferencias(paciente._id); 
+            controlador.Excluir(paciente._id); 
 
             var existePaciente = controlador.Existe(paciente._id);
 

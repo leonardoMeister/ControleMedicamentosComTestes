@@ -16,10 +16,29 @@ namespace ControleMedicamentos.Infra.BancoDados.Tests.ModuloFuncionario
         public IntegratedFuncionarioTeste()
         {
             string sql =
+               @"DELETE FROM TBRequisicao;
+                  DBCC CHECKIDENT (TBRequisicao, RESEED, 0)";
+            Db.ExecutarComando(sql);
+
+            string sql2 =
+               @"DELETE FROM TBPaciente;
+                  DBCC CHECKIDENT (TBPaciente, RESEED, 0)";
+            Db.ExecutarComando(sql2);
+
+            string sql3 =
                 @"DELETE FROM TBFuncionario;
                   DBCC CHECKIDENT (TBFuncionario, RESEED, 0)";
+            Db.ExecutarComando(sql3);
 
-            Db.ExecutarComando(sql);
+            string sql4 =
+                @"DELETE FROM TBMedicamento;
+                  DBCC CHECKIDENT (TBMedicamento, RESEED, 0)";
+            Db.ExecutarComando(sql4);
+
+            string sql5 =
+                @"DELETE FROM TBFornecedor;
+                  DBCC CHECKIDENT (TBFornecedor, RESEED, 0)";
+            Db.ExecutarComando(sql5);
         }
 
         [TestMethod]
@@ -68,7 +87,7 @@ namespace ControleMedicamentos.Infra.BancoDados.Tests.ModuloFuncionario
 
             controlador.InserirNovo(funcionario);
 
-            controlador.ExcluirComReferencias(funcionario._id); 
+            controlador.Excluir(funcionario._id); 
 
             var existeFuncionaro = controlador.Existe(funcionario._id);
 
