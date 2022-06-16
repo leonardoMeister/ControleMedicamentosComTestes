@@ -8,7 +8,10 @@ using System.Data;
 
 namespace ControleMedicamentos.Infra.BancoDados.Shared
 {
-    public abstract class Controlador<T> where T : EntidadeBase
+    public abstract class Controlador<T,  TValidador, TMapeador> 
+        where T : EntidadeBase
+        where TValidador : AbstractValidator<T>,new()
+        where TMapeador : MapeadorBase<T>, new()        
     {
         protected abstract string SqlUpdate { get; }
         protected abstract string SqlDelete { get; }
@@ -17,49 +20,39 @@ namespace ControleMedicamentos.Infra.BancoDados.Shared
         protected abstract string SqlSelectId { get; }
         protected abstract string SqlExiste { get; }
 
-        public abstract AbstractValidator<T> ObterValidador(T item, List<T> lista);
-        public abstract T ConverterEmRegistro(IDataReader dataReader);
-        protected abstract Dictionary<string, object> ObtemParametrosRegistro(T registro);
-        protected Dictionary<string, object> AdicionarParametro(string campo, object valor)
-        {
-            return new Dictionary<string, object>() { { campo, valor } };
-        }
         public virtual ValidationResult InserirNovo(T registro)
         {
-            var validator = ObterValidador(registro, SelecionarTodos());
 
-            var resultadoValidacao = validator.Validate(registro);
+            var resultadoValidacao = new TValidador().Validate(registro);
 
             if (resultadoValidacao.IsValid)
             {
-                int id = Db.Insert(SqlInsert, ObtemParametrosRegistro(registro));
+                int id = Db.Insert(SqlInsert, new TMapeador().ObtemParametrosRegistro(registro));
                 registro._id = id;
             }
             return resultadoValidacao;
         }
         public virtual ValidationResult Editar(int id, T registro)
         {
-            var validator = ObterValidador(registro, SelecionarTodos());
-
-            var resultadoValidacao = validator.Validate(registro);
+            var resultadoValidacao = new TValidador().Validate(registro);
 
             if (resultadoValidacao.IsValid)
             {
                 registro._id = id;
-                Db.Update(SqlUpdate, ObtemParametrosRegistro(registro));
+                Db.Update(SqlUpdate, new TMapeador().ObtemParametrosRegistro(registro));
             }
             return resultadoValidacao;
         }
         public virtual bool Existe(int id)
         {
-            return Db.Exists(SqlExiste, AdicionarParametro("ID", id));
+            return Db.Exists(SqlExiste, new TMapeador().AdicionarParametro("ID", id));
         }
         public virtual ValidationResult Excluir(int id)
         {
             var resultadoValidacao = new ValidationResult();
             try
             {
-                Db.Delete(SqlDelete, AdicionarParametro("ID", id));
+                Db.Delete(SqlDelete, new TMapeador().AdicionarParametro("ID", id));
             }
             catch (Exception)
             {
@@ -71,11 +64,12 @@ namespace ControleMedicamentos.Infra.BancoDados.Shared
         }
         public virtual List<T> SelecionarTodos()
         {
-            return Db.GetAll(SqlSelectAll, ConverterEmRegistro);
+            return Db.GetAll(SqlSelectAll, new TMapeador().ConverterEmRegistro);
         }
         public virtual T SelecionarPorId(int id)
         {
-            return Db.Get(SqlSelectId, ConverterEmRegistro, AdicionarParametro("ID", id));
+            var mapa = new TMapeador();
+            return Db.Get(SqlSelectId, mapa.ConverterEmRegistro, mapa.AdicionarParametro("ID", id));
         }
 
     }

@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace ControleMedicamentos.Infra.BancoDados.ModuloRequisicao
 {
-    public class ControladorRequisicao : Controlador<Requisicao>
+    public class ControladorRequisicao : Controlador<Requisicao,ValidadorRequisicao, MapeadorRequisicao>
     {
         protected override string SqlUpdate =>
                 @"UPDATE TBRequisicao
@@ -62,20 +62,6 @@ namespace ControleMedicamentos.Infra.BancoDados.ModuloRequisicao
                         TBRequisicao
                     WHERE Id = @ID;";
 
-        protected override Dictionary<string, object> ObtemParametrosRegistro(Requisicao registro)
-        {
-            var parametros = new Dictionary<string, object>();
-
-            parametros.Add("ID", registro._id);
-            parametros.Add("FKFUNCIONARIO", registro.Funcionario._id);                                    
-            parametros.Add("FKPACIENTE", registro.Paciente._id);
-            parametros.Add("FKMEDICAMENTO", registro.Medicamento._id);
-            parametros.Add("QUANTIDADE", registro.QtdMedicamento);
-            parametros.Add("DATA", registro.Data);
-
-            return parametros;
-        }
-
         public override List<Requisicao> SelecionarTodos()
         {
             List<Requisicao> lista = base.SelecionarTodos();
@@ -110,25 +96,6 @@ namespace ControleMedicamentos.Infra.BancoDados.ModuloRequisicao
             return requisicao;
         }
 
-        public override Requisicao ConverterEmRegistro(IDataReader dataReader)
-        {
-            int id = Convert.ToInt32(dataReader[0]);
-            Funcionario func = new Funcionario(Convert.ToInt32(dataReader[1]));
-            Paciente paci = new Paciente(Convert.ToInt32(dataReader[2]));
-            Medicamento medi = new Medicamento(Convert.ToInt32(dataReader[3]));
-            int quantidade = Convert.ToInt32(dataReader[4]);
-            DateTime data = Convert.ToDateTime(dataReader[5]);
-
-            var requisicao = new Requisicao(medi,paci,quantidade,data,func);
-            requisicao._id = id;
-
-            return requisicao;
-        }
-        public override AbstractValidator<Requisicao> ObterValidador(Requisicao item, List<Requisicao> lista)
-        {
-            return new ValidadorRequisicao();
-        }
-
         internal List<Requisicao> SelecionarTodasRequisicoesApenasParaMedicamento(int id)
         {
             string query = @"SELECT [Id]
@@ -140,7 +107,8 @@ namespace ControleMedicamentos.Infra.BancoDados.ModuloRequisicao
                   FROM TBRequisicao
                   WHERE Medicamento_Id = @ID ;";
 
-            List<Requisicao> lista = Db.GetAll(query,ConverterEmRegistro,AdicionarParametro("ID", id));
+            var mapeador = new MapeadorRequisicao();
+            List<Requisicao> lista = Db.GetAll(query, mapeador.ConverterEmRegistro,mapeador.AdicionarParametro("ID", id));
 
             var controlF = new ControladorFuncionario();
             var controlP = new ControladorPaciente();
